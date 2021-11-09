@@ -29,6 +29,7 @@ export default function MovieCard(props) {
   const movie = props.movie;
   const handleAddToFavorite = (e) => {
     e.preventDefault();
+    console.log(props,e);
     props.selectFavorite(movie.id);
   };
   return (
