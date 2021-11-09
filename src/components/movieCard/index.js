@@ -1,4 +1,5 @@
 import React from "react";
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -26,9 +27,27 @@ const useStyles = makeStyles({
 export default function MovieCard(props) {
   const classes = useStyles();
   const movie = props.movie;
+  const handleAddToFavorite = (e) => {
+    e.preventDefault();
+    props.selectFavorite(movie.id);
+  };
   return (
     <Card className={classes.card}>
-      <CardHeader className={classes.header} title={movie.title} />
+      <CardHeader
+      className={classes.header}
+      avatar={
+        movie.favorite ? (
+          <Avatar className={classes.avatar}>
+            <FavoriteIcon />
+          </Avatar>
+        ) : null
+      }
+      title={
+        <Typography variant="h5" component="p">
+          {movie.title}{" "}
+        </Typography>
+      }
+    />
       <CardMedia
         className={classes.media}
         image={
@@ -54,9 +73,9 @@ export default function MovieCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={null}>
-          <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
+      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+        <FavoriteIcon color="primary" fontSize="large" />
+    </IconButton>
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
