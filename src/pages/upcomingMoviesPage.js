@@ -12,6 +12,7 @@ const UpcomingMoviesPage = (props) => {
     if (isError) return <h1>{error.message}</h1>
     const movies = data.results;
     const favorites = movies.filter(m => m.favorite)
+    const mustWatch = movies.filter(m => m.mustWatch)
     localStorage.setItem('favorites', JSON.stringify(favorites))
 
     return (

@@ -11,11 +11,11 @@ import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
-import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import img from '../../images/film-poster-placeholder.png'
 import { MoviesContext } from "../../contexts/moviesContext";
+import PlaylistAdd from "@material-ui/icons/PlaylistAdd";
 
 
 const useStyles = makeStyles({
@@ -28,20 +28,19 @@ const useStyles = makeStyles({
 
 export default function MovieCard({movie, action}) {
   const classes = useStyles();
-//  const movie = props.movie;
-//   const handleAddToFavorite = (e) => {
-//     e.preventDefault();
-//     console.log(props,e);
-//     props.selectFavorite(movie.id);
-//   };
-  const { favorites } = useContext(MoviesContext);
+  const { favorites, mustWatch } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
-    movie.favorite = true;
+    movie.favorite = true
   } else {
     movie.favorite = false
   }
-
+  if (mustWatch.find((id) => id === movie.id)) {
+    movie.mustWatch = true
+  } else {
+    movie.mustWatch = false
+  }
+  
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -51,8 +50,14 @@ export default function MovieCard({movie, action}) {
           <Avatar className={classes.avatar}>
             <FavoriteIcon />
           </Avatar>
-        ) : null
+          ) :
+        movie.mustWatch ? (
+          <Avatar className={classes.avatar}>
+            <PlaylistAdd/>
+          </Avatar>
+          ) : null
       }
+
       title={
         <Typography variant="h5" component="p">
           {movie.title}{" "}
@@ -84,7 +89,7 @@ export default function MovieCard({movie, action}) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        {action(movie)}}
+        {action(movie)}
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
