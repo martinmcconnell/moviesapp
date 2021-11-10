@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import CalendarIcon from "@material-ui/icons/CalendarTodayTwoTone";
 import StarRateIcon from "@material-ui/icons/StarRate";
-import IconButton from "@material-ui/core/IconButton";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
 import img from '../../images/film-poster-placeholder.png'
@@ -26,8 +25,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MovieCard(props) {
+export default function MovieCard({ movie, action }) {
   const classes = useStyles();
+  const movie = props.movie;
+  const handleAddToFavorite = (e) => {
+    e.preventDefault();
+    console.log(props,e);
+    props.selectFavorite(movie.id);
+  };
   const { favorites, addToFavorites } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
@@ -36,10 +41,6 @@ export default function MovieCard(props) {
     movie.favorite = false
   }
 
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -82,10 +83,12 @@ export default function MovieCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+      {action(movie)}
+
+        <Link to={`/movies/${movie.id}`} >
+      {/* <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
         <FavoriteIcon color="primary" fontSize="large" />
-    </IconButton>
-        <Link to={`/movies/${movie.id}`}>
+    </IconButton> */}
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
