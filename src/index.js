@@ -10,6 +10,7 @@ import MovieReviewPage from "./pages/movieReviewPage";
 import SiteHeader from './components/siteHeader'
 import MoviesContextProvider from "./contexts/moviesContext";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
+import TrendingMoviesPage from "./pages/trendingMoviesPage";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -46,6 +47,7 @@ const App = () => {
             <Route exact path="/" component={HomePage} />
             <Route path="/reviews/:id" component={MovieReviewPage} />
             <Route exact path="/movies/upcoming" component={UpcomingMoviesPage} />
+            <Route exact path="/movies/trending" component={TrendingMoviesPage}/>
             <Redirect from="*" to="/" />
         </Switch>
         </MoviesContextProvider>
