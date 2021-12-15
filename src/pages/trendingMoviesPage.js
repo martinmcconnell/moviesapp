@@ -7,7 +7,7 @@ import AddToPlaylistIcon from '../components/cardIcons/addToPlaylist'
 
 const trendingMoviesPage = (props) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const {data, error, isLoading, isError}  = useQuery('upcoming', getTrending)
+    const {data, error, isLoading, isError}  = useQuery('trending', getTrending)
 
     if (isLoading) {
         return <Spinner />;
